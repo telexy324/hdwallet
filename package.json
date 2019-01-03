@@ -5,7 +5,14 @@
   "dependencies": {
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "react-scripts": "2.1.2"
+    "react-scripts": "2.1.2",
+    "bip39": "^2.5.0",
+    "ethers": "^4.0.20",
+    "file-saver": "^2.0.0",
+    "json-format": "^1.0.1",
+    "pubsub-js": "^1.7.0",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.84.0"
   },
   "scripts": {
     "start": "react-scripts start",

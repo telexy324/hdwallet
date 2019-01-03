@@ -1,28 +1,45 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
+import PubSub from "pubsub-js";
 import './App.css';
+import LoginForm from './view/login/login'
+import Wallet from './view/wallet/wallet'
+import {Container} from "semantic-ui-react";
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+    state = {
+        login: false,
+        loading: false,
+        loginEvent: '',
+        wallets: []
+    }
+
+    componentWillMount() {
+        let loginEvent = PubSub.subscribe("onLoginSucc", this.onLoginSucc)
+        this.setState({loginEvent})
+    }
+
+    onLoginSucc = (msg, data) => {
+        console.log("登陆成功")
+        console.log(data)
+        this.setState({
+            login: true,
+            wallets: data
+        })
+    }
+
+    componentWillUnmount() {
+        PubSub.unsubscribe(this.state.loginEvent)
+    }
+
+    render() {
+        let {login} = this.state
+        let content = login ? <Wallet wallets={this.state.wallets}/> : <LoginForm/>
+        return (
+            <Container>
+                {content}
+            </Container>
+        );
+    }
 }
 
 export default App;
